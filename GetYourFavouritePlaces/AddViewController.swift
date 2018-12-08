@@ -12,6 +12,9 @@ import MapKit
 
 class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     var zoom = true
+    var favLongitude:Double?
+    var favLatitude:Double?
+    var favName:String?
     @IBOutlet weak var myMap: MKMapView!
     private let locationManager = CLLocationManager()
     override func viewDidLoad() {
@@ -44,17 +47,61 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         else
         {
             zoom = true
+            let region = MKCoordinateRegion(center: myMap.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008))
+            myMap.setRegion(region,animated:true)
+            
         }
+        
     }
     
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func addButtonPressed(_ sender: UIButton) {
+        zoom = false
+        let alert = UIAlertController(title: "Chose New Location", message: nil, preferredStyle: .alert )
+        alert.addTextField{textfield in}
+        
+        let ok = UIAlertAction(title: "OK", style: .default){ action in
+            if let textfield = alert.textFields?.first{
+                let geoCoder = CLGeocoder()
+                geoCoder.geocodeAddressString(textfield.text!){ (placemarks,error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    guard let placemarks = placemarks,
+                        let placemark = placemarks.first else {
+                            return
+                    }
+                    let coordinate = placemark.location?.coordinate
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = coordinate!
+                    self.myMap.addAnnotation(annotation)
+                    
+                    self.favLatitude = coordinate!.latitude
+                    self.favLongitude = coordinate!.longitude
+                    
+                    let regionFav = MKCoordinateRegion(center: coordinate!, span: MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008))
+                    self.myMap.setRegion(regionFav,animated:true)
+                }
+            }
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel){
+            action in
+            }
+    alert.addAction(ok)
+    alert.addAction(cancel)
+        self.present(alert,animated: true, completion: nil)
     }
-    */
-
+    
+    @IBAction func saveButtonPressed(_ sender: UIButton) {
+        if let favLat = favLatitude{
+            let favLong = favLongitude
+            print(favLat)
+            print(favLong!)
+        }
+    else {
+    print("Save sth first!")
+    }
+    }
 }

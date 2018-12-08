@@ -95,16 +95,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nib-qf-fJe">
-                                <rect key="frame" x="0.0" y="519" width="375" height="51"/>
+                                <rect key="frame" x="0.0" y="519" width="375" height="68"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.67342909370000004" blue="0.6802289735" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Add!"/>
+                                <connections>
+                                    <action selector="addButtonPressed:" destination="XXv-Wd-pGq" eventType="touchUpInside" id="mXc-cF-WoX"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="he3-qW-nUJ">
-                                <rect key="frame" x="0.0" y="578" width="375" height="89"/>
+                                <rect key="frame" x="0.0" y="595" width="375" height="72"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.89115596900000005" blue="0.92464299930000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Save this place!"/>
+                                <connections>
+                                    <action selector="saveButtonPressed:" destination="XXv-Wd-pGq" eventType="touchUpInside" id="0Ch-lE-Zt3"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ctD-Gh-YUu">
                                 <rect key="frame" x="0.0" y="28" width="64" height="30"/>
@@ -119,9 +125,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QmK-ft-vxS">
-                                <rect key="frame" x="299" y="27" width="60" height="30"/>
+                                <rect key="frame" x="292" y="27" width="74" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Zoom"/>
+                                <state key="normal" title="Follow me!"/>
                                 <connections>
                                     <action selector="zoomButtonClicked:" destination="XXv-Wd-pGq" eventType="touchUpInside" id="RBZ-1m-Z6v"/>
                                 </connections>
