@@ -14,7 +14,6 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var zoom = true
     var favLongitude:Double?
     var favLatitude:Double?
-    var favName:String?
     @IBOutlet weak var myMap: MKMapView!
     private let locationManager = CLLocationManager()
     override func viewDidLoad() {
@@ -31,8 +30,7 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         if zoom == true {
-        let region = MKCoordinateRegion(center: myMap.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008))
-        myMap.setRegion(region,animated:true)
+        zoomOnMe()
         }
     }
     @IBAction func backButtonPressed(_ sender: UIButton) {
@@ -47,17 +45,20 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         else
         {
             zoom = true
-            let region = MKCoordinateRegion(center: myMap.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008))
-            myMap.setRegion(region,animated:true)
-            
+            zoomOnMe()
         }
         
     }
     
+    func zoomOnMe()
+    {
+        let region = MKCoordinateRegion(center: myMap.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008))
+        myMap.setRegion(region,animated:true)
+    }
 
     @IBAction func addButtonPressed(_ sender: UIButton) {
         zoom = false
-        let alert = UIAlertController(title: "Chose New Location", message: nil, preferredStyle: .alert )
+        let alert = UIAlertController(title: "Find the place", message: "Enter the address of the location", preferredStyle: .alert )
         alert.addTextField{textfield in}
         
         let ok = UIAlertAction(title: "OK", style: .default){ action in
@@ -89,19 +90,41 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let cancel = UIAlertAction(title: "Cancel", style: .cancel){
             action in
             }
-    alert.addAction(ok)
-    alert.addAction(cancel)
+        alert.addAction(ok)
+        alert.addAction(cancel)
         self.present(alert,animated: true, completion: nil)
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         if let favLat = favLatitude{
-            let favLong = favLongitude
-            print(favLat)
-            print(favLong!)
+            let favLong = favLongitude!
+            let alert = UIAlertController(title: "Name your favourite Location", message: nil, preferredStyle: .alert )
+            alert.addTextField{textfield in}
+            
+            let save = UIAlertAction(title: "Save", style: .default){ action in
+                if let textfield = alert.textFields?.first{
+                    let favName = textfield.text!
+                    print(favName)
+                    print(favLat)
+                    print(favLong)
+                }
+                
+            }
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel){
+                action in
+            }
+            alert.addAction(save)
+            alert.addAction(cancel)
+            self.present(alert,animated: true, completion: nil)
+            
         }
-    else {
-    print("Save sth first!")
-    }
+        else {
+            let alert = UIAlertController(title: "Oh no!", message: "You need to add a place first.", preferredStyle: .alert )
+            let ok = UIAlertAction(title: "OK", style: .cancel){
+                        action in
+                    }
+            alert.addAction(ok)
+            self.present(alert,animated: true, completion: nil)
+        }
     }
 }
