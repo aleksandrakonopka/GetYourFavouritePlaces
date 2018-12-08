@@ -10,16 +10,34 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class FavouritesViewController: UIViewController{
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+class FavouritesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
+    
+    var array: [FavouritePlace]?
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if  array==nil {
+            return 0
+        }
+        else
+        {
+        return array!.count
+        }
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")
+        cell.textLabel?.text = array![indexPath.row].name
+        return cell
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
     @IBAction func backButtonPressed(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
     
+
     /*
     // MARK: - Navigation
 

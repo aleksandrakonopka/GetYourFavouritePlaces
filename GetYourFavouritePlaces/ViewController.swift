@@ -23,6 +23,11 @@ class ViewController: UIViewController,ReceiveArrayElement {
             let secondVC = segue.destination as! AddViewController
             secondVC.delegate=self
         }
+        if segue.identifier == "goToFavourites"
+        {
+            let favouritesVC = segue.destination as! FavouritesViewController
+            favouritesVC.array = tabFav
+        }
     }
     func dataReceived(element: FavouritePlace) {
         //print("Element : \(element)")
