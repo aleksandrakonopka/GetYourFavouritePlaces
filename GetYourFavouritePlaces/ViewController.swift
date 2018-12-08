@@ -28,6 +28,11 @@ class ViewController: UIViewController,ReceiveArrayElement {
             let favouritesVC = segue.destination as! FavouritesViewController
             favouritesVC.array = tabFav
         }
+        if segue.identifier == "goToShow"
+        {
+            let showVC = segue.destination as! ShowOnMapViewController
+            showVC.array = tabFav
+        }
     }
     func dataReceived(element: FavouritePlace) {
         //print("Element : \(element)")
