@@ -23,7 +23,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add new place!"/>
                                 <connections>
-                                    <segue destination="XXv-Wd-pGq" kind="show" id="QHY-tw-QCN"/>
+                                    <segue destination="XXv-Wd-pGq" kind="show" identifier="addPlace" id="QHY-tw-QCN"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Xf-tc-XPS">

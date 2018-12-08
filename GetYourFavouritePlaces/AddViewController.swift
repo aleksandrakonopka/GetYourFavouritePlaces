@@ -10,7 +10,14 @@ import UIKit
 import CoreLocation
 import MapKit
 
+
+protocol ReceiveArrayElement{
+    func dataReceived(element:FavouritePlace)
+}
+
+
 class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+    var delegate : ReceiveArrayElement?
     var zoom = true
     var favLongitude:Double?
     var favLatitude:Double?
@@ -104,9 +111,9 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             let save = UIAlertAction(title: "Save", style: .default){ action in
                 if let textfield = alert.textFields?.first{
                     let favName = textfield.text!
-                    print(favName)
-                    print(favLat)
-                    print(favLong)
+                    let favPlace = FavouritePlace(name: favName, long: favLong, lat: favLat)
+                    self.delegate?.dataReceived(element: favPlace)
+                    //print(favPlace)
                 }
                 
             }
