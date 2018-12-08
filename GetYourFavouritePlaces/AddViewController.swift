@@ -12,17 +12,20 @@ import MapKit
 
 
 protocol ReceiveArrayElement{
-    func dataReceived(element:FavouritePlace)
+    func dataReceived(array:[FavouritePlace])
 }
 
 
 class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     var delegate : ReceiveArrayElement?
+    @IBOutlet weak var whereIAmLabel: UILabel!
     var zoom = true
     var favLongitude:Double?
     var favLatitude:Double?
     @IBOutlet weak var myMap: MKMapView!
     private let locationManager = CLLocationManager()
+    var array: [FavouritePlace]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -112,7 +115,12 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 if let textfield = alert.textFields?.first{
                     let favName = textfield.text!
                     let favPlace = FavouritePlace(name: favName, long: favLong, lat: favLat)
-                    self.delegate?.dataReceived(element: favPlace)
+                    //Tutaj dodam element do tablicy i wyslę ją
+                    
+                    if (self.array?.append(favPlace)) == nil {
+                        self.array = [favPlace]
+                    }
+                    self.delegate?.dataReceived(array:self.array!)
                     //print(favPlace)
                 }
                 
@@ -126,12 +134,32 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
         }
         else {
-            let alert = UIAlertController(title: "Oh no!", message: "You need to add a place first.", preferredStyle: .alert )
-            let ok = UIAlertAction(title: "OK", style: .cancel){
-                        action in
-                    }
-            alert.addAction(ok)
-            self.present(alert,animated: true, completion: nil)
+            upsAlert(title: "Oh no!", message: "You need to add a place first.")
         }
+    }
+    
+    @IBAction func showButtonPressed(_ sender: UIButton) {
+        myMap.removeAnnotations(myMap.annotations)
+        if array != nil {
+        for element in array!
+        {
+           print(element.name)
+        }
+
+        }
+        else
+        {
+            upsAlert(title: "Oh no!", message:"You have no favourite places!" )
+        }
+        
+        }
+    func upsAlert(title:String,message:String)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert )
+        let ok = UIAlertAction(title: "OK", style: .cancel){
+            action in
+        }
+        alert.addAction(ok)
+        self.present(alert,animated: true, completion: nil)
     }
 }
