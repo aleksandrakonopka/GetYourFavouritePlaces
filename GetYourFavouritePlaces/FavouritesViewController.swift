@@ -10,12 +10,15 @@ import UIKit
 import CoreLocation
 import MapKit
 
+protocol ReceiveModifiedArray{
+    func arrayReceived(array:[FavouritePlace])
+}
 class FavouritesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     var array: [FavouritePlace]?
-    
+     var delegate : ReceiveModifiedArray?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if  array==nil {
+        if  array == nil {
             return 0
         }
         else
@@ -29,15 +32,37 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
         return cell
     }
     
+    @IBOutlet weak var myTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     @IBAction func backButtonPressed(_ sender: UIButton) {
+        if array != nil {
+        delegate?.arrayReceived(array: array!)
+        }
+        else
+        {
+          delegate?.arrayReceived(array: [])
+        }
         self.dismiss(animated: true, completion: nil)
     }
     
-
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            myTable.beginUpdates()
+            myTable.deleteRows(at: [indexPath], with: .left)
+            array?.remove(at: indexPath.row)
+            //print("ARRAY: \(array)")
+            myTable.endUpdates()
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

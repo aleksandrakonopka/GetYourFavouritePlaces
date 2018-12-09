@@ -67,6 +67,7 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
 
     @IBAction func addButtonPressed(_ sender: UIButton) {
+        cleanMap()
         zoom = false
         let alert = UIAlertController(title: "Find the place", message: "Enter the address of the location", preferredStyle: .alert )
         alert.addTextField{textfield in}
@@ -139,12 +140,16 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     
     @IBAction func showButtonPressed(_ sender: UIButton) {
-        myMap.removeAnnotations(myMap.annotations)
-        if array != nil {
+        cleanMap()
+        if array != nil && array!.count>0 {
         for element in array!
         {
-           print(element.name)
+            addPointOfInterest(element: element)
         }
+            let coordinate = CLLocationCoordinate2D(latitude: array![array!.count-1].lat, longitude: array![array!.count-1].long)
+            let regionFav = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
+            self.myMap.setRegion(regionFav,animated:true)
+       
 
         }
         else
@@ -161,5 +166,40 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         alert.addAction(ok)
         self.present(alert,animated: true, completion: nil)
+    }
+    
+    private func addPointOfInterest(element:FavouritePlace)
+    {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude:element.lat,longitude:element.long)
+        self.myMap.addAnnotation(annotation)
+        let region = CLCircularRegion(center: annotation.coordinate, radius: 1000, identifier: element.name)
+        region.notifyOnEntry = true
+        region.notifyOnExit = true
+        self.myMap.addOverlay(MKCircle(center: annotation.coordinate, radius: 1000))
+        self.locationManager.startMonitoring(for: region)
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKCircle {
+            let circleRenderer = MKCircleRenderer(circle:overlay as! MKCircle)
+            circleRenderer.lineWidth = 1.0
+            circleRenderer.strokeColor = UIColor.purple
+            circleRenderer.fillColor = UIColor.green
+            circleRenderer.alpha = 0.4
+            return circleRenderer
+        }
+        return MKOverlayRenderer()
+    }
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        whereIAmLabel.text = "You entered \(region.identifier)"
+    }
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        whereIAmLabel.text = "You left \(region.identifier)"
+    }
+    func cleanMap()
+    {
+        myMap.removeAnnotations(myMap.annotations)
+        myMap.removeOverlays(myMap.overlays)
     }
 }

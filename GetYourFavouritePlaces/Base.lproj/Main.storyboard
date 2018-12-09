@@ -87,6 +87,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="q0C-Up-TBB"/>
                     </view>
+                    <connections>
+                        <outlet property="myTable" destination="y5A-YH-WDF" id="6vR-0q-N8D"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KJ4-9K-zSr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
