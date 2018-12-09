@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct FavouritePlace:Encodable {
+struct FavouritePlace:Codable {
     var name: String
     var long: Double
     var lat: Double

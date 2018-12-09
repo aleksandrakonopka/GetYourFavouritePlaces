@@ -12,13 +12,14 @@ import MapKit
 
 class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray {
     var tabFav: [FavouritePlace]?
-//    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
+let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
        //print(dataFilePath)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        loadData()
         if segue.identifier == "addPlace"
         {
             let secondVC = segue.destination as! AddViewController
@@ -40,6 +41,17 @@ class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray
     func arrayReceived(array: [FavouritePlace]) {
         tabFav = array
         print("Array received \(array) ")
+    }
+    func loadData()
+    {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do{
+                tabFav = try decoder.decode([FavouritePlace].self, from: data)
+            } catch{
+                print("Error decoding item array: \(error)")
+            }
+        }
     }
 
 }
