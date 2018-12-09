@@ -17,6 +17,7 @@ protocol ReceiveArrayElement{
 
 
 class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     var delegate : ReceiveArrayElement?
     @IBOutlet weak var whereIAmLabel: UILabel!
     var zoom = true
@@ -122,7 +123,7 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                         self.array = [favPlace]
                     }
                     self.delegate?.dataReceived(array:self.array!)
-                    //print(favPlace)
+                    self.saveToPlist()
                 }
                 
             }
@@ -201,5 +202,16 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     {
         myMap.removeAnnotations(myMap.annotations)
         myMap.removeOverlays(myMap.overlays)
+    }
+    func saveToPlist()
+    {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(self.array)
+            try data.write(to:self.dataFilePath!)
+        }
+        catch {
+            print("Error encoding item array \(error)")
+        }
     }
 }

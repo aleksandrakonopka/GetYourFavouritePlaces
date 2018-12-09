@@ -12,10 +12,11 @@ import MapKit
 
 class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray {
     var tabFav: [FavouritePlace]?
+//    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+       //print(dataFilePath)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addPlace"
@@ -40,5 +41,6 @@ class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray
         tabFav = array
         print("Array received \(array) ")
     }
+
 }
 

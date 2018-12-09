@@ -14,7 +14,7 @@ protocol ReceiveModifiedArray{
     func arrayReceived(array:[FavouritePlace])
 }
 class FavouritesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
-    
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     var array: [FavouritePlace]?
      var delegate : ReceiveModifiedArray?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -60,9 +60,20 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
             array?.remove(at: indexPath.row)
             //print("ARRAY: \(array)")
             myTable.endUpdates()
+            saveToPlist()
         }
     }
-    
+    func saveToPlist()
+    {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(self.array)
+            try data.write(to:self.dataFilePath!)
+        }
+        catch {
+            print("Error encoding item array \(error)")
+        }
+    }
     /*
     // MARK: - Navigation
 
