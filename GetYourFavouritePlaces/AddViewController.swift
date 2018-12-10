@@ -24,19 +24,20 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var favLongitude:Double?
     var favLatitude:Double?
     @IBOutlet weak var myMap: MKMapView!
-    private let locationManager = CLLocationManager()
+    //to
+//    private let locationManager = CLLocationManager()
     var array: [FavouritePlace]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.myMap.delegate = self
-        
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = kCLDistanceFilterNone
-        locationManager.startUpdatingLocation()
+        //to
+//        locationManager.delegate = self
+//        locationManager.requestAlwaysAuthorization()
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.distanceFilter = kCLDistanceFilterNone
+//        locationManager.startUpdatingLocation()
         self.myMap.showsUserLocation = true
     }
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
@@ -68,6 +69,8 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
 
     @IBAction func addButtonPressed(_ sender: UIButton) {
+        self.favLatitude = nil
+        self.favLongitude = nil
         cleanMap()
         zoom = false
         let alert = UIAlertController(title: "Find the place", message: "Enter the address of the location", preferredStyle: .alert )
@@ -174,11 +177,11 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude:element.lat,longitude:element.long)
         self.myMap.addAnnotation(annotation)
-        let region = CLCircularRegion(center: annotation.coordinate, radius: 1000, identifier: element.name)
-        region.notifyOnEntry = true
-        region.notifyOnExit = true
+//        let region = CLCircularRegion(center: annotation.coordinate, radius: 1000, identifier: element.name)
+//        region.notifyOnEntry = true
+//        region.notifyOnExit = true
         self.myMap.addOverlay(MKCircle(center: annotation.coordinate, radius: 1000))
-        self.locationManager.startMonitoring(for: region)
+//        self.locationManager.startMonitoring(for: region)
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -192,12 +195,12 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         return MKOverlayRenderer()
     }
-    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        whereIAmLabel.text = "You entered \(region.identifier)"
-    }
-    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        whereIAmLabel.text = "You left \(region.identifier)"
-    }
+//    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+//        whereIAmLabel.text = "You entered \(region.identifier)"
+//    }
+//    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+//        whereIAmLabel.text = "You left \(region.identifier)"
+//    }
     func cleanMap()
     {
         myMap.removeAnnotations(myMap.annotations)

@@ -34,10 +34,20 @@
                                     <segue destination="NrS-MC-fac" kind="show" identifier="goToFavourites" id="Cpc-lP-nTK"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="where am i label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yB5-jw-sia">
+                                <rect key="frame" x="31" y="355" width="328" height="201"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="8XZ-6t-dUa"/>
                     </view>
+                    <connections>
+                        <outlet property="whereAmILabel" destination="yB5-jw-sia" id="zuQ-Q5-9BV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lLh-Tm-yr7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
