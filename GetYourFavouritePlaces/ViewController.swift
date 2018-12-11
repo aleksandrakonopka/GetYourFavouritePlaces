@@ -24,7 +24,7 @@ class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.startUpdatingLocation()
-        print("DUPA")
+    
 //        let annotation = MKPointAnnotation()
 //        annotation.coordinate = CLLocationCoordinate2D(latitude:  52.22694873573955,longitude: 21.095796838761235)
 //        let region = CLCircularRegion(center: annotation.coordinate, radius: 1000, identifier: "zlotej dupy")
