@@ -38,6 +38,8 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 //        locationManager.desiredAccuracy = kCLLocationAccuracyBest
 //        locationManager.distanceFilter = kCLDistanceFilterNone
 //        locationManager.startUpdatingLocation()
+        
+        
         self.myMap.showsUserLocation = true
     }
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {

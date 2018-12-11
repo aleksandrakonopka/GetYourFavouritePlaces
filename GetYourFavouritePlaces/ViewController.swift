@@ -13,6 +13,7 @@ import MapKit
 class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray, CLLocationManagerDelegate {
     
     @IBOutlet weak var whereAmILabel: UILabel!
+    @IBOutlet weak var whereAmILabeltwo: UILabel!
     var tabFav: [FavouritePlace]?
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     private let locationManager = CLLocationManager()
@@ -23,8 +24,18 @@ class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.startUpdatingLocation()
-        // Do any additional setup after loading the view, typically from a nib.
-       //print(dataFilePath)
+        print("DUPA")
+//        let annotation = MKPointAnnotation()
+//        annotation.coordinate = CLLocationCoordinate2D(latitude:  52.22694873573955,longitude: 21.095796838761235)
+//        let region = CLCircularRegion(center: annotation.coordinate, radius: 1000, identifier: "zlotej dupy")
+//        region.notifyOnEntry = true
+//        region.notifyOnExit = true
+//        locationManager.startMonitoring(for: region)
+        
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        loadData()
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         loadData()
@@ -39,7 +50,7 @@ class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray
             let favouritesVC = segue.destination as! FavouritesViewController
             favouritesVC.array = tabFav
             favouritesVC.delegate = self
-            
+
         }
     }
     func dataReceived(array:[FavouritePlace]) {
@@ -83,10 +94,13 @@ class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray
         whereAmILabel.text = "You left \(region.identifier)"
     }
     func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
-        whereAmILabel.text = "Error: \(error) Error for region: \(region?.identifier)"
+        whereAmILabel.text = "Error: \(error) Error for region: \(region!.identifier))"
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         whereAmILabel.text = "Second Error: \(error)"
+    }
+    func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
+         whereAmILabeltwo.text = "Did start monitoring for \(region)"
     }
 }
 
