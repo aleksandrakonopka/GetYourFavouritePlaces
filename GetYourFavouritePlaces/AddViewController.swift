@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 import MapKit
-
+import Accelerate
 
 protocol ReceiveArrayElement{
     func dataReceived(array:[FavouritePlace])
