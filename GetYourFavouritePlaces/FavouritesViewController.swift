@@ -13,10 +13,15 @@ import MapKit
 protocol ReceiveModifiedArray{
     func arrayReceived(array:[FavouritePlace])
 }
+protocol ReceiveDeletedPlace{
+    func deletedPlaceReceived(deletedPlace:FavouritePlace)
+}
 class FavouritesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     var array: [FavouritePlace]?
-     var delegate : ReceiveModifiedArray?
+    var deletedPlaces: [FavouritePlace]?
+    //var delegate : ReceiveModifiedArray?
+    var delegate : ReceiveDeletedPlace?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if  array == nil {
             return 0
@@ -38,13 +43,13 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
         
     }
     @IBAction func backButtonPressed(_ sender: UIButton) {
-        if array != nil {
-        delegate?.arrayReceived(array: array!)
-        }
-        else
-        {
-          delegate?.arrayReceived(array: [])
-        }
+//        if array != nil {
+//        delegate?.arrayReceived(array: array!)
+//        }
+//        else
+//        {
+//          delegate?.arrayReceived(array: [])
+//        }
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -58,9 +63,11 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
             myTable.beginUpdates()
             myTable.deleteRows(at: [indexPath], with: .left)
             //jesli usuniemy to protokołem wysyłam usuniete id do view controllera i tam przestaje obserwowac dla tego
+            self.delegate?.deletedPlaceReceived(deletedPlace:array![indexPath.row])
             array?.remove(at: indexPath.row)
             myTable.endUpdates()
-            saveToPlist()
+//            self.delegate?.deletedPlaceReceived(deletedPlace:array![indexPath.row])
+            //saveToPlist()
         }
     }
     func saveToPlist()

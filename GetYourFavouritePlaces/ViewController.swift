@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class ViewController: UIViewController,ReceiveModifiedArray, CLLocationManagerDelegate,ReceiveNewFavouritePlace {
+class ViewController: UIViewController,ReceiveModifiedArray, ReceiveDeletedPlace, CLLocationManagerDelegate,ReceiveNewFavouritePlace {
     
     @IBOutlet weak var whereAmILabel: UILabel!
     @IBOutlet weak var whereAmILabeltwo: UILabel!
@@ -34,6 +34,12 @@ class ViewController: UIViewController,ReceiveModifiedArray, CLLocationManagerDe
     }
     override func viewDidAppear(_ animated: Bool) {
         print("Dla nich monitorujemy: \(locationManager.monitoredRegions)")
+        var regionyMonitorowane: String = "Regiony monitorowane: "
+        for region in locationManager.monitoredRegions
+        {
+            regionyMonitorowane += " " + region.identifier
+        }
+        whereAmILabeltwo.text = regionyMonitorowane
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //loadData()
@@ -59,6 +65,18 @@ class ViewController: UIViewController,ReceiveModifiedArray, CLLocationManagerDe
         startMonitoring(places: [place])
         print("Tab Fav \(self.tabFav!)")
         self.saveToPlist()
+    }
+    func deletedPlaceReceived(deletedPlace: FavouritePlace) {
+        self.tabFav?.removeAll(where: { (place) in
+            if(place.name == deletedPlace.name)
+            {
+            stopMonitoring(place:place)
+            }
+            return place.name == deletedPlace.name
+        })
+        self.saveToPlist()
+        print("Dla nich monitorujemy po usunieciu: \(locationManager.monitoredRegions)")
+        
     }
     func arrayReceived(array: [FavouritePlace]) {
         tabFav = array
@@ -89,6 +107,14 @@ class ViewController: UIViewController,ReceiveModifiedArray, CLLocationManagerDe
             locationManager.startMonitoring(for: region)
         }
     }
+    func stopMonitoring(place: FavouritePlace)
+    {
+        for region in self.locationManager.monitoredRegions {
+            if region.identifier == place.name {
+            self.locationManager.stopMonitoring(for: region)
+            }
+        }
+    }
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         whereAmILabel.text = "You entered \(region.identifier)"
     }
@@ -102,7 +128,7 @@ class ViewController: UIViewController,ReceiveModifiedArray, CLLocationManagerDe
         whereAmILabel.text = "I cannot use your location!"
     }
     func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
-         whereAmILabeltwo.text = "Did start monitoring for \(region)"
+        // whereAmILabeltwo.text = "Did start monitoring for \(region)"
     }
     func saveToPlist()
     {
