@@ -146,14 +146,6 @@
                                 <rect key="frame" x="0.0" y="58" width="375" height="453"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QmK-ft-vxS">
-                                <rect key="frame" x="292" y="27" width="74" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Follow me!"/>
-                                <connections>
-                                    <action selector="zoomButtonClicked:" destination="XXv-Wd-pGq" eventType="touchUpInside" id="RBZ-1m-Z6v"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This label changes depending on where you are" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Nr-Yn-jEO">
                                 <rect key="frame" x="184" y="595" width="182" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -170,6 +162,14 @@
                                     <action selector="showButtonPressed:" destination="XXv-Wd-pGq" eventType="touchUpInside" id="SwG-2a-faI"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QmK-ft-vxS">
+                                <rect key="frame" x="255" y="28" width="111" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Don't follow me!"/>
+                                <connections>
+                                    <action selector="zoomButtonClicked:" destination="XXv-Wd-pGq" eventType="touchUpInside" id="RBZ-1m-Z6v"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="oFL-Jh-sJj"/>
@@ -177,6 +177,7 @@
                     <connections>
                         <outlet property="myMap" destination="B14-OZ-Cu2" id="6Qr-ZE-y8F"/>
                         <outlet property="whereIAmLabel" destination="6Nr-Yn-jEO" id="0jK-Zp-bMo"/>
+                        <outlet property="zoomButton" destination="QmK-ft-vxS" id="e3D-4Z-P5A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ow-8n-iSV" userLabel="First Responder" sceneMemberID="firstResponder"/>

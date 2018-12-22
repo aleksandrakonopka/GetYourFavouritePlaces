@@ -20,6 +20,7 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     var delegate : ReceiveArrayElement?
     @IBOutlet weak var whereIAmLabel: UILabel!
+    @IBOutlet weak var zoomButton: UIButton!
     var zoom = true
     var favLongitude:Double?
     var favLatitude:Double?
@@ -33,7 +34,7 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         self.myMap.delegate = self
         //to
-//        locationManager.delegate = self
+//        locationManager.delegate = self //
 //        locationManager.requestAlwaysAuthorization()
 //        locationManager.desiredAccuracy = kCLLocationAccuracyBest
 //        locationManager.distanceFilter = kCLDistanceFilterNone
@@ -55,10 +56,12 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         if zoom == true
         {
             zoom = false
+            zoomButton.setTitle("Follow me!",for: .normal)
         }
         else
         {
             zoom = true
+            zoomButton.setTitle("Don't follow me!",for: .normal)
             zoomOnMe()
         }
         
