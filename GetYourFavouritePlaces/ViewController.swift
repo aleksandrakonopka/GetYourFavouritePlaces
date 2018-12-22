@@ -52,7 +52,10 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
         if segue.identifier == "goToFavourites"
         {
             let favouritesVC = segue.destination as! FavouritesViewController
-            print("We send this:\(tabFav!)")
+//            if tabFav != nil
+//            {
+//            print("We send this:\(tabFav!)")
+//            }
             favouritesVC.array = tabFav
             favouritesVC.delegate = self
 

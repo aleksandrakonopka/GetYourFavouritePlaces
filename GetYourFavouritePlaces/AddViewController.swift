@@ -20,7 +20,6 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     //var delegate : ReceiveArrayElement?
     var delegate : ReceiveNewFavouritePlace?
-    @IBOutlet weak var whereIAmLabel: UILabel!
     @IBOutlet weak var zoomButton: UIButton!
     var zoom = true
     var favLongitude:Double?
@@ -75,6 +74,9 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
 
     @IBAction func addButtonPressed(_ sender: UIButton) {
+        if array == nil{
+            array = []
+        }
         if array!.count >= 20
         {
           upsAlert(title:"UPS",message:"You can't have more than 20 favourite places!")
@@ -103,6 +105,8 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                     let coordinate = placemark.location?.coordinate
                     let annotation = MKPointAnnotation()
                     annotation.coordinate = coordinate!
+                    //nowe
+                    annotation.title = textfield.text!
                     self.myMap.addAnnotation(annotation)
                     
                     self.favLatitude = coordinate!.latitude
@@ -189,6 +193,8 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude:element.lat,longitude:element.long)
+        //name
+        annotation.title = element.name
         self.myMap.addAnnotation(annotation)
 //        let region = CLCircularRegion(center: annotation.coordinate, radius: 1000, identifier: element.name)
 //        region.notifyOnEntry = true
