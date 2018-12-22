@@ -14,11 +14,15 @@ import MapKit
 protocol ReceiveArrayElement{
     func dataReceived(array:[FavouritePlace])
 }
-
+protocol ReceiveNewFavouritePlace
+{
+    func placeReceived(place: FavouritePlace)
+}
 
 class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
-    var delegate : ReceiveArrayElement?
+    //var delegate : ReceiveArrayElement?
+    var delegate : ReceiveNewFavouritePlace?
     @IBOutlet weak var whereIAmLabel: UILabel!
     @IBOutlet weak var zoomButton: UIButton!
     var zoom = true
@@ -125,13 +129,13 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 if let textfield = alert.textFields?.first{
                     let favName = textfield.text!
                     let favPlace = FavouritePlace(name: favName, long: favLong, lat: favLat)
-                    //Tutaj dodam element do tablicy i wyslę ją
-                    
-                    if (self.array?.append(favPlace)) == nil {
-                        self.array = [favPlace]
-                    }
-                    self.delegate?.dataReceived(array:self.array!)
-                    self.saveToPlist()
+                    //*Zamiast dodac do tablicy wysle sam element i dodam go do tablicy w viewcontrollerze głównym
+//                    if (self.array?.append(favPlace)) == nil {
+//                        self.array = [favPlace]
+//                    }
+                    //self.delegate?.dataReceived(array:self.array!)
+                    self.delegate?.placeReceived(place: favPlace)
+                    //self.saveToPlist()
                 }
                 
             }
@@ -211,15 +215,15 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         myMap.removeAnnotations(myMap.annotations)
         myMap.removeOverlays(myMap.overlays)
     }
-    func saveToPlist()
-    {
-        let encoder = PropertyListEncoder()
-        do {
-            let data = try encoder.encode(self.array)
-            try data.write(to:self.dataFilePath!)
-        }
-        catch {
-            print("Error encoding item array \(error)")
-        }
-    }
+//    func saveToPlist()
+//    {
+//        let encoder = PropertyListEncoder()
+//        do {
+//            let data = try encoder.encode(self.array)
+//            try data.write(to:self.dataFilePath!)
+//        }
+//        catch {
+//            print("Error encoding item array \(error)")
+//        }
+//    }
 }

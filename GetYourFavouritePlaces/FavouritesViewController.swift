@@ -57,8 +57,8 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
             // handle delete (by removing the data from your array and updating the tableview)
             myTable.beginUpdates()
             myTable.deleteRows(at: [indexPath], with: .left)
+            //jesli usuniemy to protokołem wysyłam usuniete id do view controllera i tam przestaje obserwowac dla tego
             array?.remove(at: indexPath.row)
-            //print("ARRAY: \(array)")
             myTable.endUpdates()
             saveToPlist()
         }

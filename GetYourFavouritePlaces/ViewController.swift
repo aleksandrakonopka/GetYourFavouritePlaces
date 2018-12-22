@@ -10,10 +10,11 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray, CLLocationManagerDelegate {
+class ViewController: UIViewController,ReceiveModifiedArray, CLLocationManagerDelegate,ReceiveNewFavouritePlace {
     
     @IBOutlet weak var whereAmILabel: UILabel!
     @IBOutlet weak var whereAmILabeltwo: UILabel!
+    
     var tabFav: [FavouritePlace]?
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     private let locationManager = CLLocationManager()
@@ -23,39 +24,41 @@ class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray
         locationManager.requestAlwaysAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = kCLDistanceFilterNone
+//
+//        for region in locationManager.monitoredRegions {
+//            locationManager.stopMonitoring(for: region)
+//        }
         locationManager.startUpdatingLocation()
-    
-//        let annotation = MKPointAnnotation()
-//        annotation.coordinate = CLLocationCoordinate2D(latitude:  52.22694873573955,longitude: 21.095796838761235)
-//        let region = CLCircularRegion(center: annotation.coordinate, radius: 1000, identifier: "zlotej dupy")
-//        region.notifyOnEntry = true
-//        region.notifyOnExit = true
-//        locationManager.startMonitoring(for: region)
-        
-        
+        print(locationManager.monitoredRegions)
+        loadData() // * wczytuje dane i zaczynam dla nich obserwowac na początku działania aplikacji
     }
     override func viewDidAppear(_ animated: Bool) {
-        loadData()
+        print("Dla nich monitorujemy: \(locationManager.monitoredRegions)")
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        loadData()
+        //loadData()
         if segue.identifier == "addPlace"
         {
             let secondVC = segue.destination as! AddViewController
-            secondVC.delegate=self
+            secondVC.delegate = self
             secondVC.array = tabFav
         }
         if segue.identifier == "goToFavourites"
         {
             let favouritesVC = segue.destination as! FavouritesViewController
+            print("We send this:\(tabFav!)")
             favouritesVC.array = tabFav
             favouritesVC.delegate = self
 
         }
     }
-    func dataReceived(array:[FavouritePlace]) {
-        tabFav = array
-        print("Tablica: \(tabFav!)")
+    func placeReceived(place: FavouritePlace){
+        if (self.tabFav?.append(place)) == nil {
+            self.tabFav = [place]
+        }
+        startMonitoring(places: [place])
+        print("Tab Fav \(self.tabFav!)")
+        self.saveToPlist()
     }
     func arrayReceived(array: [FavouritePlace]) {
         tabFav = array
@@ -84,7 +87,6 @@ class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray
             region.notifyOnEntry = true
             region.notifyOnExit = true
             locationManager.startMonitoring(for: region)
-
         }
     }
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
@@ -97,10 +99,21 @@ class ViewController: UIViewController,ReceiveArrayElement, ReceiveModifiedArray
         whereAmILabel.text = "Error: \(error) Error for region: \(region!.identifier))"
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        whereAmILabel.text = "Second Error: \(error)"
+        whereAmILabel.text = "I cannot use your location!"
     }
     func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
          whereAmILabeltwo.text = "Did start monitoring for \(region)"
+    }
+    func saveToPlist()
+    {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(self.tabFav)
+            try data.write(to:self.dataFilePath!)
+        }
+        catch {
+            print("Error encoding item array \(error)")
+        }
     }
 }
 
