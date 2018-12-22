@@ -11,9 +11,6 @@ import CoreLocation
 import MapKit
 
 
-protocol ReceiveArrayElement{
-    func dataReceived(array:[FavouritePlace])
-}
 protocol ReceiveNewFavouritePlace
 {
     func placeReceived(place: FavouritePlace)
@@ -78,6 +75,12 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
 
     @IBAction func addButtonPressed(_ sender: UIButton) {
+        if array!.count >= 20
+        {
+          upsAlert(title:"UPS",message:"You can't have more than 20 favourite places!")
+        }
+        else
+        {
         self.favLatitude = nil
         self.favLongitude = nil
         cleanMap()
@@ -117,6 +120,7 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         alert.addAction(ok)
         alert.addAction(cancel)
         self.present(alert,animated: true, completion: nil)
+        }
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
@@ -130,9 +134,9 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                     let favName = textfield.text!
                     let favPlace = FavouritePlace(name: favName, long: favLong, lat: favLat)
                     //*Zamiast dodac do tablicy wysle sam element i dodam go do tablicy w viewcontrollerze głównym
-//                    if (self.array?.append(favPlace)) == nil {
-//                        self.array = [favPlace]
-//                    }
+                    if (self.array?.append(favPlace)) == nil {
+                        self.array = [favPlace]
+                    }
                     //self.delegate?.dataReceived(array:self.array!)
                     self.delegate?.placeReceived(place: favPlace)
                     //self.saveToPlist()

@@ -10,9 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
-protocol ReceiveModifiedArray{
-    func arrayReceived(array:[FavouritePlace])
-}
+
 protocol ReceiveDeletedPlace{
     func deletedPlaceReceived(deletedPlace:FavouritePlace)
 }
