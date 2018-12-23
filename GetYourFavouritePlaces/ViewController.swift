@@ -9,9 +9,10 @@
 import UIKit
 import CoreLocation
 import MapKit
+import UserNotifications
 
 class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDelegate,ReceiveNewFavouritePlace {
-    
+    let center = UNUserNotificationCenter.current()
     @IBOutlet weak var whereAmILabel: UILabel!
     @IBOutlet weak var whereAmILabeltwo: UILabel!
     
@@ -24,6 +25,9 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
         locationManager.requestAlwaysAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = kCLDistanceFilterNone
+        center.requestAuthorization(options: [.alert,.sound]) { (granted, error) in
+            //print(error)
+        }
 //
 //        for region in locationManager.monitoredRegions {
 //            locationManager.stopMonitoring(for: region)
@@ -40,6 +44,11 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
             regionyMonitorowane += " " + region.identifier
         }
         whereAmILabeltwo.text = regionyMonitorowane
+        //test powiadomien
+//        let title = "You entered ViewController"
+//        let body = "Bla bla bla"
+//        createNotification(title: title, body: body)
+        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //loadData()
@@ -120,9 +129,15 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
     }
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         whereAmILabel.text = "You entered \(region.identifier)"
+        let title = "You entered \(region.identifier)"
+        let body = "Have you got things to do here?"
+        createNotification(title: title, body: body)
     }
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         whereAmILabel.text = "You left \(region.identifier)"
+        let title = "You left \(region.identifier)"
+        let body = "I hope you haven't forgotten to do anything here"
+        createNotification(title: title, body: body)
     }
     func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
         whereAmILabel.text = "Error: \(error) Error for region: \(region!.identifier))"
@@ -142,6 +157,23 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
         }
         catch {
             print("Error encoding item array \(error)")
+        }
+    }
+    
+    func createNotification(title:String,body:String)
+    {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        
+        let date = Date().addingTimeInterval(5)
+        let dateComponents = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+        self.center.add(request) { (error) in
+            // print(error)
         }
     }
 }
