@@ -76,15 +76,26 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
         self.present(alert,animated: true, completion: nil)
     }
 
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if (editingStyle == .delete) {
-//            myTable.beginUpdates()
-//            myTable.deleteRows(at: [indexPath], with: .left)
-//            array?.remove(at: indexPath.row)
-//            myTable.endUpdates()
-//            saveToPlist()
-//        }
-//}
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            myTable.beginUpdates()
+            myTable.deleteRows(at: [indexPath], with: .left)
+            var number = 0
+            for element in array!
+            {
+                if arrayInPlace![indexPath.row].item == element.item
+                {
+                    print("ELEMENT DO USUNIECIA: \(element)")
+                    print("CZY TO TEN SAM?: \(array![number])")
+                    array!.remove(at: number)
+                }
+                number = number+1
+            }
+            arrayInPlace?.remove(at: indexPath.row)
+            myTable.endUpdates()
+            saveToPlist()
+        }
+}
     func saveToPlist()
     {
         let encoder = PropertyListEncoder()
