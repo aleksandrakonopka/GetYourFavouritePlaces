@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F268A2B21D6B30800816DCE /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F268A2A21D6B30800816DCE /* ToDoTableViewController.swift */; };
 		6F802CF621B405D200430D7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F802CF521B405D200430D7B /* AppDelegate.swift */; };
 		6F802CF821B405D200430D7B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F802CF721B405D200430D7B /* ViewController.swift */; };
 		6F802CFB21B405D200430D7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F802CF921B405D200430D7B /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6F268A2A21D6B30800816DCE /* ToDoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewController.swift; sourceTree = "<group>"; };
 		6F802CF221B405D200430D7B /* GetYourFavouritePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GetYourFavouritePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F802CF521B405D200430D7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6F802CF721B405D200430D7B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				6F802D0E21B415A200430D7B /* FavouritesViewController.swift */,
 				6F802CF721B405D200430D7B /* ViewController.swift */,
 				6F802CF921B405D200430D7B /* Main.storyboard */,
+				6F268A2A21D6B30800816DCE /* ToDoTableViewController.swift */,
 				6FB4174A21BC04D3007E1F93 /* FavouritePlace.swift */,
 				6F802CFF21B405DC00430D7B /* Assets.xcassets */,
 				6F802D0121B405DC00430D7B /* LaunchScreen.storyboard */,
@@ -149,6 +152,7 @@
 			files = (
 				6F802D1121B415BB00430D7B /* AddViewController.swift in Sources */,
 				6F802D0F21B415A200430D7B /* FavouritesViewController.swift in Sources */,
+				6F268A2B21D6B30800816DCE /* ToDoTableViewController.swift in Sources */,
 				6F802CFE21B405D200430D7B /* GetYourFavouritePlaces.xcdatamodeld in Sources */,
 				6F802CF821B405D200430D7B /* ViewController.swift in Sources */,
 				6F802CF621B405D200430D7B /* AppDelegate.swift in Sources */,
