@@ -180,6 +180,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="EGn-e8-UZ2"/>
                     </view>
+                    <connections>
+                        <outlet property="myTable" destination="8Oa-mX-aAf" id="ORG-pM-iNo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rlw-Qx-ht8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
