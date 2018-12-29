@@ -64,6 +64,16 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
         alert.addAction(cancel)
         self.present(alert,animated: true, completion: nil)
     }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            myTable.beginUpdates()
+            myTable.deleteRows(at: [indexPath], with: .left)
+            array?.remove(at: indexPath.row)
+            myTable.endUpdates()
+            saveToPlist()
+        }
+}
     func saveToPlist()
     {
         let encoder = PropertyListEncoder()
