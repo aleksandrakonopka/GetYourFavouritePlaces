@@ -15,6 +15,7 @@ protocol ReceiveDeletedPlace{
     func deletedPlaceReceived(deletedPlace:FavouritePlace)
 }
 class FavouritesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
+    var placeId = "noId"
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     var array: [FavouritePlace]?
     var deletedPlaces: [FavouritePlace]?
@@ -80,11 +81,17 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("INDEX PATH: \(indexPath.row), ELEMENT ID: \(array![indexPath.row].name)")
+        placeId = array![indexPath.row].name
         performSegue(withIdentifier: "goToToDoList", sender: self)
     
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "goToToDoList"
+        {
+            let toDoVC = segue.destination as! ToDoTableViewController
+            toDoVC.placeId = placeId
+        }
     }
     
 

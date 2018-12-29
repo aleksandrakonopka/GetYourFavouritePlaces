@@ -13,26 +13,33 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
     @IBOutlet weak var myTable: UITableView!
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("ToDoItems.plist")
     var array: [ToDoItem]?
+    var arrayInPlace: [ToDoItem]?
+    var placeId = "noPlaceId"
     //var array = [ToDoItem(placeName: "Place01", item: "Umyć Zęby"),ToDoItem(placeName: "Place02", item: "Podlać kwiatki"), ToDoItem(placeName: "Place03", item: "Zjeść Ser")]
     override func viewDidLoad() {
         array = []
         super.viewDidLoad()
         loadData()
+        fillArrayInPlace()
+        print("PLACEID: \(placeId)")
         print(dataFilePath)
         print(array)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if  array == nil {
+        if  arrayInPlace == nil {
             return 0
         }
         else
         {
-            return array!.count
+            return arrayInPlace!.count
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "toDoCell")
-        cell.textLabel?.text = array![indexPath.row].item
+        if arrayInPlace != nil
+        {
+        cell.textLabel?.text = arrayInPlace![indexPath.row].item
+        }
         return cell
     }
 
@@ -46,11 +53,15 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
         let ok = UIAlertAction(title: "OK", style: .default){ action in
             if let textfield = alert.textFields?.first{
                 print(textfield.text!)
-                let newItem = ToDoItem(placeName: "Place00", item: textfield.text!)
+                let newItem = ToDoItem(placeName: self.placeId, item: textfield.text!)
                 print(newItem)
                 if (self.array?.append(newItem)) == nil {
                     self.array = [newItem]
                 }
+                if (self.arrayInPlace?.append(newItem)) == nil {
+                    self.arrayInPlace = [newItem]
+                }
+                print("NOWY ITEM:\(newItem)")
                 print(self.array)
                 self.myTable.reloadData()
                 self.saveToPlist()
@@ -65,15 +76,15 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
         self.present(alert,animated: true, completion: nil)
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == .delete) {
-            myTable.beginUpdates()
-            myTable.deleteRows(at: [indexPath], with: .left)
-            array?.remove(at: indexPath.row)
-            myTable.endUpdates()
-            saveToPlist()
-        }
-}
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if (editingStyle == .delete) {
+//            myTable.beginUpdates()
+//            myTable.deleteRows(at: [indexPath], with: .left)
+//            array?.remove(at: indexPath.row)
+//            myTable.endUpdates()
+//            saveToPlist()
+//        }
+//}
     func saveToPlist()
     {
         let encoder = PropertyListEncoder()
@@ -95,5 +106,19 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
                 print("Error decoding item array: \(error)")
             }
         }
+    }
+    func fillArrayInPlace()
+    {
+        if array != nil{
+            for element in array!
+            {
+                if(element.placeName == placeId){
+                    if (self.arrayInPlace?.append(element)) == nil {
+                        self.arrayInPlace = [element]
+                    }
+                }
+            }
+        }
+        print("ARRAYINPLACE:\(arrayInPlace)")
     }
 }
