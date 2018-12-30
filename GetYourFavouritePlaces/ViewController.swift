@@ -15,6 +15,9 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
     let center = UNUserNotificationCenter.current()
     @IBOutlet weak var whereAmILabel: UILabel!
     @IBOutlet weak var whereAmILabeltwo: UILabel!
+    //To Do Items
+    let dataFilePathToDoItems = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("ToDoItems.plist")
+    var arrayToDoItem: [ToDoItem]?
     
     var tabFav: [FavouritePlace]?
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
@@ -35,6 +38,8 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
         locationManager.startUpdatingLocation()
         print(locationManager.monitoredRegions)
         loadData() // * wczytuje dane i zaczynam dla nich obserwowac na początku działania aplikacji
+        loadDataToDoItem() // wczytuje arrayToDoItem
+        //print("ARRAY TO DO ITEM: \(arrayToDoItem)")
     }
     override func viewDidAppear(_ animated: Bool) {
         print("Dla nich monitorujemy: \(locationManager.monitoredRegions)")
@@ -66,6 +71,7 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
 //            print("We send this:\(tabFav!)")
 //            }
             favouritesVC.array = tabFav
+            favouritesVC.arrayToDoItem = arrayToDoItem
             favouritesVC.delegate = self
 
         }
@@ -109,6 +115,17 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
             }
         }
     }
+        func loadDataToDoItem()
+        {
+            if let data = try? Data(contentsOf: dataFilePathToDoItems!) {
+                let decoder = PropertyListDecoder()
+                do{
+                    arrayToDoItem = try decoder.decode([ToDoItem].self, from: data)
+                } catch{
+                    print("Error decoding item array: \(error)")
+                }
+            }
+        }
     func startMonitoring(places: [FavouritePlace])
    {
         for place in places

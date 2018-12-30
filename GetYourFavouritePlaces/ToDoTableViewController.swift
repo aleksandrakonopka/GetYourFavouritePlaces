@@ -17,13 +17,13 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
     var placeId = "noPlaceId"
     //var array = [ToDoItem(placeName: "Place01", item: "Umyć Zęby"),ToDoItem(placeName: "Place02", item: "Podlać kwiatki"), ToDoItem(placeName: "Place03", item: "Zjeść Ser")]
     override func viewDidLoad() {
-        array = []
+        //array = []
         super.viewDidLoad()
-        loadData()
+        //loadData()
         fillArrayInPlace()
         print("PLACEID: \(placeId)")
-        print(dataFilePath)
-        print(array)
+        //print(dataFilePath)
+        print("Array to do items in ToDo: \(array)")
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if  arrayInPlace == nil {
@@ -107,17 +107,17 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
             print("Error encoding item array \(error)")
         }
     }
-    func loadData()
-    {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do{
-                array = try decoder.decode([ToDoItem].self, from: data)
-            } catch{
-                print("Error decoding item array: \(error)")
-            }
-        }
-    }
+//    func loadData()
+//    {
+//        if let data = try? Data(contentsOf: dataFilePath!) {
+//            let decoder = PropertyListDecoder()
+//            do{
+//                array = try decoder.decode([ToDoItem].self, from: data)
+//            } catch{
+//                print("Error decoding item array: \(error)")
+//            }
+//        }
+//    }
     func fillArrayInPlace()
     {
         if array != nil{

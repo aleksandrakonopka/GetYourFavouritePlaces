@@ -16,9 +16,13 @@ protocol ReceiveDeletedPlace{
 }
 class FavouritesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var placeId = "noId"
+    let dataFilePathToDoItems = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("ToDoItems.plist")
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     var array: [FavouritePlace]?
     var deletedPlaces: [FavouritePlace]?
+    //To Do Item
+    var arrayToDoItem: [ToDoItem]?
+    //var arrayToDoItems = [ToDoItem(placeName:"warszawa", item: "umyc kwiatki")]
     //var delegate : ReceiveModifiedArray?
     var delegate : ReceiveDeletedPlace?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -38,6 +42,8 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
     
     @IBOutlet weak var myTable: UITableView!
     override func viewDidLoad() {
+       // loadDataToDoItem()
+       print("ARRAY TO DO ITEMS IN FAVOURITES \(arrayToDoItem)")
         super.viewDidLoad()
         
     }
@@ -101,9 +107,21 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
         {
             let toDoVC = segue.destination as! ToDoTableViewController
             toDoVC.placeId = placeId
+            toDoVC.array = arrayToDoItem
+            print("ARRAYTODOITEMS FAV \(arrayToDoItem)")
         }
     }
-    
+//    func loadDataToDoItem()
+//    {
+//        if let data = try? Data(contentsOf: dataFilePathToDoItems!) {
+//            let decoder = PropertyListDecoder()
+//            do{
+//                arrayToDoItem = try decoder.decode([ToDoItem].self, from: data)
+//            } catch{
+//                print("Error decoding item array: \(error)")
+//            }
+//        }
+//    }
 
 
 }
