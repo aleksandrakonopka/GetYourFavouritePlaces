@@ -74,6 +74,25 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
             let alert = UIAlertController(title: "Are you sure?", message: "Would you like to delete this favourite place - '\(array![indexPath.row].name)' with all related ToDoItems?", preferredStyle: .alert )
             let yesButton = UIAlertAction(title: "Yes", style: .default){ action in
                 print("Yes")
+               // NIE USUWAC
+                self.myTable.beginUpdates()
+                self.myTable.deleteRows(at: [indexPath], with: .left)
+                var number = 0
+                for element in self.arrayToDoItem!
+                {
+                    if(element.placeName == self.array![indexPath.row].name)
+                    {
+                        self.arrayToDoItem?.remove(at: number)
+                    }
+                    else
+                    {
+                        number = number + 1
+                    }
+                }
+                self.delegate?.deletedPlaceReceived(deletedPlace:self.array![indexPath.row])
+                self.array?.remove(at: indexPath.row)
+                self.myTable.endUpdates()
+                self.saveToPlistToDoItem()
             }
             
             let noButton = UIAlertAction(title: "No", style: .cancel){
@@ -122,6 +141,17 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
    func toDoListArrayReceived(data: [ToDoItem]){
         arrayToDoItem = data
         print("Zadziałało!")
+    }
+    func saveToPlistToDoItem()
+    {
+        let encoder = PropertyListEncoder()
+        do {
+            let data = try encoder.encode(self.arrayToDoItem)
+            try data.write(to:self.dataFilePathToDoItems!)
+        }
+        catch {
+            print("Error encoding item array \(error)")
+        }
     }
 //    func loadDataToDoItem()
 //    {

@@ -37,6 +37,8 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
 //        }
         locationManager.startUpdatingLocation()
         print(locationManager.monitoredRegions)
+        //Cleaning ToDoItems
+        //cleanToDoItems()
         loadData() // * wczytuje dane i zaczynam dla nich obserwowac na początku działania aplikacji
         loadDataToDoItem() // wczytuje arrayToDoItem
         //print("ARRAY TO DO ITEM: \(arrayToDoItem)")
@@ -197,6 +199,19 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
     func toDoListArrayReceivedFromFavVC(data: [ToDoItem]) {
         print("Pykło")
         arrayToDoItem = data
+    }
+    func cleanToDoItems()
+    {
+        let encoder = PropertyListEncoder()
+        var cleanArray : [ToDoItem]
+        cleanArray = []
+        do {
+            let data = try encoder.encode(cleanArray)
+            try data.write(to:self.dataFilePathToDoItems!)
+        }
+        catch {
+            print("Error encoding item array \(error)")
+        }
     }
 }
 
