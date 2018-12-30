@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol SendBackToDoListArray
+{
+    func toDoListArrayReceived(data:[ToDoItem])
+}
+
 class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     @IBOutlet weak var myTable: UITableView!
@@ -15,6 +20,7 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
     var array: [ToDoItem]?
     var arrayInPlace: [ToDoItem]?
     var placeId = "noPlaceId"
+    var delegate : SendBackToDoListArray?
     //var array = [ToDoItem(placeName: "Place01", item: "Umyć Zęby"),ToDoItem(placeName: "Place02", item: "Podlać kwiatki"), ToDoItem(placeName: "Place03", item: "Zjeść Ser")]
     override func viewDidLoad() {
         //array = []
@@ -44,6 +50,7 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
 
     @IBAction func backButtonClicked(_ sender: UIButton) {
+        delegate?.toDoListArrayReceived(data: self.array!)
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func addButtonClicked(_ sender: UIButton) {

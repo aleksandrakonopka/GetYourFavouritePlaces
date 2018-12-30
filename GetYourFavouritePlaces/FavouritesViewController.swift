@@ -14,7 +14,7 @@ import MapKit
 protocol ReceiveDeletedPlace{
     func deletedPlaceReceived(deletedPlace:FavouritePlace)
 }
-class FavouritesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
+class FavouritesViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, SendBackToDoListArray{
     var placeId = "noId"
     let dataFilePathToDoItems = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("ToDoItems.plist")
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
@@ -44,6 +44,7 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
     override func viewDidLoad() {
        // loadDataToDoItem()
        print("ARRAY TO DO ITEMS IN FAVOURITES \(arrayToDoItem)")
+        print(dataFilePathToDoItems)
         super.viewDidLoad()
         
     }
@@ -109,7 +110,12 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
             toDoVC.placeId = placeId
             toDoVC.array = arrayToDoItem
             print("ARRAYTODOITEMS FAV \(arrayToDoItem)")
+            toDoVC.delegate = self
         }
+    }
+   func toDoListArrayReceived(data: [ToDoItem]){
+        arrayToDoItem = data
+        print("Zadziałało!")
     }
 //    func loadDataToDoItem()
 //    {
