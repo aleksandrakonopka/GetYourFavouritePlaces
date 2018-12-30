@@ -11,7 +11,7 @@ import CoreLocation
 import MapKit
 import UserNotifications
 
-class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDelegate,ReceiveNewFavouritePlace {
+class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDelegate,ReceiveNewFavouritePlace,SendBackToDoListArrayFromFavVCToVC {
     let center = UNUserNotificationCenter.current()
     @IBOutlet weak var whereAmILabel: UILabel!
     @IBOutlet weak var whereAmILabeltwo: UILabel!
@@ -73,6 +73,7 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
             favouritesVC.array = tabFav
             favouritesVC.arrayToDoItem = arrayToDoItem
             favouritesVC.delegate = self
+            favouritesVC.delegateSendBack = self
 
         }
     }
@@ -192,6 +193,10 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
         self.center.add(request) { (error) in
             // print(error)
         }
+    }
+    func toDoListArrayReceivedFromFavVC(data: [ToDoItem]) {
+        print("Pykło")
+        arrayToDoItem = data
     }
 }
 
