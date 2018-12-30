@@ -58,15 +58,25 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == .delete) {
-            // handle delete (by removing the data from your array and updating the tableview)
-            myTable.beginUpdates()
-            myTable.deleteRows(at: [indexPath], with: .left)
-            //jesli usuniemy to protokołem wysyłam usuniete id do view controllera i tam przestaje obserwowac dla tego
-            self.delegate?.deletedPlaceReceived(deletedPlace:array![indexPath.row])
-            array?.remove(at: indexPath.row)
-            myTable.endUpdates()
+            let alert = UIAlertController(title: "Are you sure?", message: "Would you like to delete this favourite place - '\(array![indexPath.row].name)' with all related ToDoItems?", preferredStyle: .alert )
+            let yesButton = UIAlertAction(title: "Yes", style: .default){ action in
+                print("Yes")
+            }
+            
+            let noButton = UIAlertAction(title: "No", style: .cancel){
+                action in
+                print("No")
+            }
+            alert.addAction(yesButton)
+            alert.addAction(noButton)
+            self.present(alert,animated: true, completion: nil)
+            
+            //NIE USUWAC
+//            myTable.beginUpdates()
+//            myTable.deleteRows(at: [indexPath], with: .left)
 //            self.delegate?.deletedPlaceReceived(deletedPlace:array![indexPath.row])
-            //saveToPlist()
+//            array?.remove(at: indexPath.row)
+//            myTable.endUpdates()
         }
     }
     func saveToPlist()
