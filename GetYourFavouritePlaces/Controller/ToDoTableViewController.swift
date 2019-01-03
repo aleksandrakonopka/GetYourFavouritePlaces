@@ -29,7 +29,7 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
         fillArrayInPlace()
         print("PLACEID: \(placeId)")
         //print(dataFilePath)
-        print("Array to do items in ToDo: \(array)")
+        print("Array to do items in ToDo: \(array!)")
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if  arrayInPlace == nil {
@@ -72,7 +72,7 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
                     self.arrayInPlace = [newItem]
                 }
                 print("NOWY ITEM:\(newItem)")
-                print(self.array)
+                print(self.array!)
                 self.myTable.reloadData()
                 self.saveToPlist()
                 
@@ -140,6 +140,6 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
                 }
             }
         }
-        print("ARRAYINPLACE:\(arrayInPlace)")
+        print("ARRAYINPLACE:\(arrayInPlace!)")
     }
 }

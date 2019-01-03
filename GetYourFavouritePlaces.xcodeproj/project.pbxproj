@@ -33,7 +33,7 @@
 		6F802D0E21B415A200430D7B /* FavouritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
 		6F802D1021B415BB00430D7B /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		6F8B459621D792020018511E /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
-		6FB4174A21BC04D3007E1F93 /* FavouritePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePlace.swift; sourceTree = "<group>"; };
+		6FB4174A21BC04D3007E1F93 /* FavouritePlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavouritePlace.swift; path = "/Users/aleksandrakonopka/Desktop/SwiatecznaPraca 14/GetYourFavouritePlaces/GetYourFavouritePlaces/Model/FavouritePlace.swift"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
