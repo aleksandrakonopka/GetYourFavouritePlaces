@@ -50,7 +50,10 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
 
     @IBAction func backButtonClicked(_ sender: UIButton) {
+        if array != nil
+        {
         delegate?.toDoListArrayReceived(data: self.array!)
+        }
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func addButtonClicked(_ sender: UIButton) {

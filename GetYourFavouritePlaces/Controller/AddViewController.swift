@@ -20,6 +20,7 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("FavouritePlaces.plist")
     //var delegate : ReceiveArrayElement?
     var delegate : ReceiveNewFavouritePlace?
+    //var array = [FavouritePlace]()
     @IBOutlet weak var zoomButton: UIButton!
     var zoom = true
     var favLongitude:Double?
@@ -31,6 +32,7 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //array = [FavouritePlace]()
         
         self.myMap.delegate = self
         //to
@@ -45,7 +47,7 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         if zoom == true {
-        zoomOnMe()
+            zoomOnMe()
         }
     }
     @IBAction func backButtonPressed(_ sender: UIButton) {
@@ -57,9 +59,7 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         {
             zoom = false
             zoomButton.setTitle("Follow me!",for: .normal)
-        }
-        else
-        {
+        }else{
             zoom = true
             zoomButton.setTitle("Don't follow me!",for: .normal)
             zoomOnMe()
@@ -145,7 +145,6 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                     self.delegate?.placeReceived(place: favPlace)
                     //self.saveToPlist()
                 }
-                
             }
             let cancel = UIAlertAction(title: "Cancel", style: .cancel){
                 action in
@@ -170,15 +169,13 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             let coordinate = CLLocationCoordinate2D(latitude: array![array!.count-1].lat, longitude: array![array!.count-1].long)
             let regionFav = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
             self.myMap.setRegion(regionFav,animated:true)
-       
-
         }
         else
         {
             upsAlert(title: "Oh no!", message:"You have no favourite places!" )
         }
-        
-        }
+    }
+    
     func upsAlert(title:String,message:String)
     {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert )

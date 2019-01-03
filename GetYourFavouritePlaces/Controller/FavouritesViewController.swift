@@ -48,8 +48,8 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
     @IBOutlet weak var myTable: UITableView!
     override func viewDidLoad() {
        // loadDataToDoItem()
-       print("ARRAY TO DO ITEMS IN FAVOURITES \(arrayToDoItem)")
-        print(dataFilePathToDoItems)
+       print("ARRAY TO DO ITEMS IN FAVOURITES \(arrayToDoItem!)")
+        print(dataFilePathToDoItems!)
         super.viewDidLoad()
         
     }
@@ -134,7 +134,7 @@ class FavouritesViewController: UIViewController,UITableViewDelegate,UITableView
             let toDoVC = segue.destination as! ToDoTableViewController
             toDoVC.placeId = placeId
             toDoVC.array = arrayToDoItem
-            print("ARRAYTODOITEMS FAV \(arrayToDoItem)")
+            print("ARRAYTODOITEMS FAV \(arrayToDoItem!)")
             toDoVC.delegate = self
         }
     }

@@ -47,6 +47,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F0ED6A121DE1CFF007BF7DE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6FB4174A21BC04D3007E1F93 /* FavouritePlace.swift */,
+				6F8B459621D792020018511E /* ToDoItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6F0ED6A221DE1D5C007BF7DE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6F802CF921B405D200430D7B /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6F0ED6A321DE1D67007BF7DE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6F802D1021B415BB00430D7B /* AddViewController.swift */,
+				6F802D0E21B415A200430D7B /* FavouritesViewController.swift */,
+				6F802CF721B405D200430D7B /* ViewController.swift */,
+				6F268A2A21D6B30800816DCE /* ToDoTableViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		6F802CE921B405D200430D7B = {
 			isa = PBXGroup;
 			children = (
@@ -66,14 +94,10 @@
 		6F802CF421B405D200430D7B /* GetYourFavouritePlaces */ = {
 			isa = PBXGroup;
 			children = (
-				6F802D1021B415BB00430D7B /* AddViewController.swift */,
+				6F0ED6A321DE1D67007BF7DE /* Controller */,
+				6F0ED6A221DE1D5C007BF7DE /* View */,
+				6F0ED6A121DE1CFF007BF7DE /* Model */,
 				6F802CF521B405D200430D7B /* AppDelegate.swift */,
-				6F802D0E21B415A200430D7B /* FavouritesViewController.swift */,
-				6F802CF721B405D200430D7B /* ViewController.swift */,
-				6F802CF921B405D200430D7B /* Main.storyboard */,
-				6F268A2A21D6B30800816DCE /* ToDoTableViewController.swift */,
-				6FB4174A21BC04D3007E1F93 /* FavouritePlace.swift */,
-				6F8B459621D792020018511E /* ToDoItem.swift */,
 				6F802CFF21B405DC00430D7B /* Assets.xcassets */,
 				6F802D0121B405DC00430D7B /* LaunchScreen.storyboard */,
 				6F802D0421B405DC00430D7B /* Info.plist */,
