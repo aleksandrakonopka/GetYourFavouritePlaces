@@ -148,15 +148,35 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
         }
     }
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        whereAmILabel.text = "You entered \(region.identifier)"
+        if tabFav == nil
+        {
+            tabFav = []
+        }
+        var count = 0
+        for element in tabFav! {
+            if element.name == region.identifier{
+                count = count + 1
+            }
+        }
+        whereAmILabel.text = "You entered \(region.identifier), things: \(count)"
         let title = "You entered \(region.identifier)"
-        let body = "Have you got things to do here?"
+        let body = "You have \(count)"
         createNotification(title: title, body: body)
     }
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        whereAmILabel.text = "You left \(region.identifier)"
+        if tabFav == nil
+        {
+            tabFav = []
+        }
+        var count = 0
+        for element in tabFav! {
+            if element.name == region.identifier{
+                count = count + 1
+            }
+        }
+        whereAmILabel.text = "You left \(region.identifier), things: \(count)"
         let title = "You left \(region.identifier)"
-        let body = "I hope you haven't forgotten to do anything here"
+        let body = "You had \(count) things to do here"
         createNotification(title: title, body: body)
     }
     func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {

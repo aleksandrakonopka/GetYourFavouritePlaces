@@ -135,15 +135,40 @@ class AddViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             let save = UIAlertAction(title: "Save", style: .default){ action in
                 if let textfield = alert.textFields?.first{
-                    let favName = textfield.text!
-                    let favPlace = FavouritePlace(name: favName, long: favLong, lat: favLat)
-                    //*Zamiast dodac do tablicy wysle sam element i dodam go do tablicy w viewcontrollerze głównym
-                    if (self.array?.append(favPlace)) == nil {
-                        self.array = [favPlace]
+                    var found = false
+                    for element in self.array!
+                    {
+                        if (element.name == textfield.text!){
+                            found = true
+                        }
                     }
-                    //self.delegate?.dataReceived(array:self.array!)
-                    self.delegate?.placeReceived(place: favPlace)
-                    //self.saveToPlist()
+                    if (found == true){
+                        self.upsAlert(title: "UPS!", message: "You already have a place with this name!")
+                    }
+                    else {
+                        var coordinatesAlreadyFound = false;
+                        for element in self.array!
+                        {
+                            if (element.long == favLong && element.lat == favLat){
+                                coordinatesAlreadyFound = true
+                            }
+                        }
+                        if(coordinatesAlreadyFound == true)
+                        {
+                            self.upsAlert(title: "UPS!", message: "You already have a place with this coordinates!")
+                        }
+                        else {
+                            let favName = textfield.text!
+                            let favPlace = FavouritePlace(name: favName, long: favLong, lat: favLat)
+                            //*Zamiast dodac do tablicy wysle sam element i dodam go do tablicy w viewcontrollerze głównym
+                            if (self.array?.append(favPlace)) == nil {
+                                self.array = [favPlace]
+                            }
+                            //self.delegate?.dataReceived(array:self.array!)
+                            self.delegate?.placeReceived(place: favPlace)
+                            //self.saveToPlist()
+                        }
+                    }
                 }
             }
             let cancel = UIAlertAction(title: "Cancel", style: .cancel){
