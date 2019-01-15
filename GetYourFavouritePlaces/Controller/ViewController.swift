@@ -158,7 +158,7 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
                 count = count + 1
             }
         }
-        whereAmILabel.text = "You entered \(region.identifier), things: \(count)"
+        whereAmILabel.text = "You entered \(region.identifier), things count: \(count)"
         let title = "You entered \(region.identifier)"
         let body = "You have \(count)"
         createNotification(title: title, body: body)
