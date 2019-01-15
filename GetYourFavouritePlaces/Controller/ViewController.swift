@@ -125,7 +125,7 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
                 do{
                     arrayToDoItem = try decoder.decode([ToDoItem].self, from: data)
                 } catch{
-                    print("Oh no! Error decoding item array: \(error)")
+                    print("Oh no, Error decoding item array: \(error)")
                 }
             }
         }
