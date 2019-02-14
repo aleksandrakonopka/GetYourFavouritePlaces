@@ -125,7 +125,7 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
                 do{
                     arrayToDoItem = try decoder.decode([ToDoItem].self, from: data)
                 } catch{
-                    print("Error decoding item array: \(error)")
+                    print("Oh no, Error decoding item array, scheisse: \(error)")
                 }
             }
         }
@@ -158,7 +158,7 @@ class ViewController: UIViewController, ReceiveDeletedPlace, CLLocationManagerDe
                 count = count + 1
             }
         }
-        whereAmILabel.text = "You entered \(region.identifier), things: \(count)"
+        whereAmILabel.text = "You entered \(region.identifier), things count: \(count)"
         let title = "You entered \(region.identifier)"
         let body = "You have \(count)"
         createNotification(title: title, body: body)
