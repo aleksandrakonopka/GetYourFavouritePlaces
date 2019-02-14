@@ -140,6 +140,6 @@ class ToDoTableViewController: UIViewController,UITableViewDelegate,UITableViewD
                 }
             }
         }
-        print("ARRAYINPLACE:\(arrayInPlace!)")
+       // print("ARRAYINPLACE:\(arrayInPlace!)")
     }
 }
